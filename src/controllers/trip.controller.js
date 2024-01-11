@@ -45,16 +45,16 @@ async function createTrip(req, res) {
 // Delete one trip
 async function deleteTrip(req, res) {
   try {
-    const result = await tripModel.deleteTrip(req.params.id);
+    const result = await tripModel.deleteTrip(req.body.id);
     if(result) {
       res.status(200).json({
         success: true,
-        message: `Trip with id ${req.params.id} deleted successfully`,
+        message: `Trip with id ${req.body.id} deleted successfully`,
       });
     } else {
       res.status(404).json({
         success: false,
-        message: `Trip with id ${req.params.id} not found`,
+        message: `Trip with id ${req.body.id} not found`,
       });
     }
   } catch (error) {
