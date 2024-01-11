@@ -1,4 +1,5 @@
 const tripModel = require('../models/trip.model');
+const boatModel = require('../models/boat.model');
 
 // Get all trips
 async function getAllTrips(req, res) {
@@ -24,17 +25,31 @@ async function getAllTrips(req, res) {
 // Create one trip
 async function createTrip(req, res) {
   try {
-    const result = await tripModel.createTrip(req.body);
-    console.log(result);
-    if(result) {
-      res.status(201).json({
-        success: true,
-        message: 'Trip created successfully',
-      });
+    var owner = false;
+    const boats = await boatModel.getBoatByUser(req.body.creator_id);
+    for (var i = 0; i < boats.length; i++) {
+      if (boats[i].id == req.body.boat_id) {
+        owner = true;
+      }
+    }
+    if(owner) {
+      const result = await tripModel.createTrip(req.body);
+      console.log(result);
+      if(result) {
+        res.status(201).json({
+          success: true,
+          message: 'Trip created successfully',
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: 'Trip could not be created',
+        });
+      }
     } else {
       res.status(400).json({
         success: false,
-        message: 'Trip could not be created',
+        message: 'You are not the owner of this boat',
       });
     }
   } catch (error) {

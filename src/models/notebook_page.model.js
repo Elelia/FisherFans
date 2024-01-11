@@ -13,7 +13,7 @@ async function getAllNotebookPages() {
 // Insert one notebook page
 async function createNotebookPage(body) {
   try {
-    const query = `INSERT INTO notebook_pages (fish_name, fish_url, comments, size, weight, spot, fishing_date, release, notebook_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const query = `INSERT INTO notebook_pages (fish_name, fish_url, comments, size, weight, spot, fishing_date, release_fish, notebook_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     
     const [results] = await db.promise().execute(query, [
       body.fish_name,
@@ -23,7 +23,7 @@ async function createNotebookPage(body) {
       body.weight,
       body.spot,
       body.fishing_date,
-      body.release,
+      body.release_fish,
       body.notebook_id
     ]);
 
