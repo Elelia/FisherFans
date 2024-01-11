@@ -3,10 +3,13 @@ const router = express.Router();
 const tripController = require('../controllers/trip.controller');
 const Token = require('../../token');
 
-// get all notebook pages
+// get all trips
 router.get('/', tripController.getAllTrips);
 
-// create one notebook page
+// create one trip
 router.post('/', Token.authenticateToken, tripController.createTrip);
 
-module.exports = router;
+// delete one trip
+router.delete('/:id', Token.authenticateToken, tripController.deleteTrip);
+
+module.exports = router;    

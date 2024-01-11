@@ -16,24 +16,29 @@ async function getAllTrips(req, res) {
       });
     }
   } catch (error) {
+    console.log("Coucou c'est moi");
     res.status(500).json(error);
   }
 }
 
-// Create one notebook page
+// Create one trip
 async function createTrip(req, res) {
+	
+}
+
+// Delete one trip
+async function deleteTrip(req, res) {
   try {
-    const result = await tripModel.createTrip(req.body);
-    console.log(result);
+    const result = await tripModel.deleteTrip(req.params.id);
     if(result) {
-      res.status(201).json({
+      res.status(200).json({
         success: true,
-        message: 'Trip created successfully',
+        message: `Trip with id ${req.params.id} deleted successfully`,
       });
     } else {
-      res.status(400).json({
+      res.status(404).json({
         success: false,
-        message: 'Trip could not be created',
+        message: `Trip with id ${req.params.id} not found`,
       });
     }
   } catch (error) {
@@ -43,5 +48,6 @@ async function createTrip(req, res) {
 
 module.exports = {
   getAllTrips,
-  createTrip
+  createTrip,
+  deleteTrip
 }
