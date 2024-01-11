@@ -7,6 +7,6 @@ const Token = require('../../token');
 router.get('/', notebookController.getAllNotebooks);
 
 // create one notebook
-router.post('/create', Token.authenticateToken, notebookController.createNotebook);
+router.post('/', Token.authenticateToken, notebookController.createNotebook);
 
 module.exports = router;

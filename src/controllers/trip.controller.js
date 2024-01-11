@@ -1,13 +1,13 @@
-const notebookModel = require('../models/notebook.model');
+const tripModel = require('../models/trip.model');
 
-// Get all notebooks
-async function getAllNotebooks(req, res) {
+// Get all trips
+async function getAllTrips(req, res) {
   try {
-    const rows = await notebookModel.getAllNotebooks();
+    const rows = await tripModel.getAllTrips();
     if(!rows) {
       res.status(404).json({
         success: false,
-        message: 'Notebooks not found',
+        message: 'Trips not found',
       });
     } else {
       res.status(200).json({
@@ -20,19 +20,20 @@ async function getAllNotebooks(req, res) {
   }
 }
 
-// Create one notebook
-async function createNotebook(req, res) {
+// Create one notebook page
+async function createTrip(req, res) {
   try {
-    const result = await notebookModel.createNotebook(req.body);
+    const result = await tripModel.createTrip(req.body);
+    console.log(result);
     if(result) {
       res.status(201).json({
         success: true,
-        message: 'Notebook created successfully',
+        message: 'Trip created successfully',
       });
     } else {
       res.status(400).json({
         success: false,
-        message: 'Notebook could not be created',
+        message: 'Trip could not be created',
       });
     }
   } catch (error) {
@@ -41,6 +42,6 @@ async function createNotebook(req, res) {
 }
 
 module.exports = {
-  getAllNotebooks,
-  createNotebook
+  getAllTrips,
+  createTrip
 }

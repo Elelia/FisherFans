@@ -7,7 +7,7 @@ const Token = require('../../token');
 router.get('/', notebookPageController.getAllNotebookPages);
 
 // create one notebook page
-router.post('/create', Token.authenticateToken, notebookPageController.createNotebookPage);
+router.post('/', Token.authenticateToken, notebookPageController.createNotebookPage);
 
 // modify one notebook page
 // router.put('/:id', Token.authenticateToken, notebookPageController.updateNotebookPage);
