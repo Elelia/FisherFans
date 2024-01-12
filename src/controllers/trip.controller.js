@@ -17,7 +17,6 @@ async function getAllTrips(req, res) {
       });
     }
   } catch (error) {
-    console.log("Coucou c'est moi");
     res.status(500).json(error);
   }
 }

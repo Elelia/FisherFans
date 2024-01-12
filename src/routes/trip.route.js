@@ -12,4 +12,4 @@ router.post('/', Token.authenticateToken, tripController.createTrip);
 // delete one trip
 router.delete('/', Token.authenticateToken, tripController.deleteTrip);
 
-module.exports = router;    
+module.exports = router;
