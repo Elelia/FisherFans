@@ -10,6 +10,6 @@ router.get('/', tripController.getAllTrips);
 router.post('/', Token.authenticateToken, tripController.createTrip);
 
 // delete one trip
-router.delete('/:id', Token.authenticateToken, tripController.deleteTrip);
+router.delete('/', Token.authenticateToken, tripController.deleteTrip);
 
-module.exports = router;    
+module.exports = router;

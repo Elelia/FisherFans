@@ -43,8 +43,15 @@ async function createTrip(body) {
 // Delete one trip
 async function deleteTrip(id) {
   try {
-    const [rows] = await db.promise().query(`DELETE FROM trip WHERE id = ${id}`);
-    return rows.affectedRows;
+    const query = `DELETE FROM trips WHERE id = ?`;
+
+    const [results] = await db.promise().execute(query, [id]);
+
+    if (results.affectedRows === 1) {
+      return true;
+    } else {
+      return false;
+    }
   } catch (error) {
     throw error;
   }
