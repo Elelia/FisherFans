@@ -10,9 +10,9 @@ router.get('/', notebookPageController.getAllNotebookPages);
 router.post('/', Token.authenticateToken, notebookPageController.createNotebookPage);
 
 // modify one notebook page
-// router.put('/:id', Token.authenticateToken, notebookPageController.updateNotebookPage);
+router.put('/:id', Token.authenticateToken, notebookPageController.updateNotebookPage);
 
 // delete one notebook page
-// router.delete('/:id', Token.authenticateToken, notebookPageController.deleteNotebookPage);
+router.delete('/:id', Token.authenticateToken, notebookPageController.deleteNotebookPage);
 
 module.exports = router;

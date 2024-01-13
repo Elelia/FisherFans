@@ -26,17 +26,6 @@ app.post('/', (req, res) => {
   res.send('POST request received');
 });
 
-/*const server = https.createServer(app, {
-  key: fs.readFileSync("key.pem"),
-  cert: fs.readFileSync("cert.pem"),
-});
-
-server.listen(process.env.PORT, () => {
-  console.log(`Server Started at ${process.env.PORT}`);
-});
-
-module.exports = app;*/
-
 app.listen(process.env.PORT, () => {
   console.log(`Server Started at ${process.env.PORT}`);
 });

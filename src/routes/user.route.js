@@ -12,4 +12,10 @@ router.post('/', Token.authenticateToken, userController.createUser);
 // delete one user
 router.delete('/:id', Token.authenticateToken, userController.deleteUser);
 
+// update one user
+// router.put('/:id', Token.authenticateToken, userController.updateUser);
+
+// get user by city
+router.get('/city/:city', Token.authenticateToken, userController.getUserByCity);
+
 module.exports = router;

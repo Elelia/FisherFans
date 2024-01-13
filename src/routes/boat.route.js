@@ -10,5 +10,15 @@ router.get('/', boatController.getAllBoats);
 router.get('/:id', boatController.getBoatByUser);
 
 // create one boat
+router.post('/', Token.authenticateToken, boatController.createBoat);
+
+// update one boat
+router.put('/:id', Token.authenticateToken, boatController.updateBoat);
+
+// delete one boat
+router.delete('/:id', Token.authenticateToken, boatController.deleteBoat);
+
+// get boat by brand
+router.get('/brand/:brand', boatController.getBoatByBrand);
 
 module.exports = router;    

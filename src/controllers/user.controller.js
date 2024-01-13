@@ -23,9 +23,7 @@ async function getAllUsers(req, res) {
 // Create one user
 async function createUser(req, res) {
   try {
-    console.log(req.body);
     const result = await userModel.createUser(req.body);
-    console.log(result);
     if(result) {
       res.status(201).json({
         success: true,
@@ -62,8 +60,49 @@ async function deleteUser(req, res) {
   }
 }
 
+// Update one user
+async function updateUser(req, res) {
+  try {
+    const result = await userModel.updateUser(req.body, req.params.id);
+    if(result) {
+      res.status(200).json({
+        success: true,
+        message: 'User updated successfully',
+      });
+    } else {
+      res.status(400).json({
+        success: false,
+        message: 'User could not be updated',
+      });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+// get user by city
+async function getUserByCity(req, res) {
+  try {
+    const rows = await userModel.getUserByCity(req.params.city);
+    if(!rows) {
+      res.status(404).json({
+        success: false,
+        message: 'Users not found',
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        results: rows
+      });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
 module.exports = {
   getAllUsers,
   createUser,
-  deleteUser
+  deleteUser,
+  getUserByCity
 }

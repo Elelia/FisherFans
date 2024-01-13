@@ -35,9 +35,9 @@ function authenticateToken(req, res, next) {
 function setTokenCookie(res, token) {
   res.cookie('token', token, {
     httpOnly: true,
-    Secure: false
+    Secure: false,
     //sameSite: 'Strict',
-    //maxAge: 3600000
+    maxAge: 3600000
   });
 }
 

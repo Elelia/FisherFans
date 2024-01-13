@@ -36,8 +36,55 @@ async function createNotebookPage(body) {
     throw error;
   }
 }
+
+// Update one notebook page
+async function updateNotebookPage(body, id) {
+  try {
+    const query = `UPDATE notebook_pages SET fish_name = ?, fish_url = ?, comments = ?, size = ?, weight = ?, spot = ?, fishing_date = ?, release_fish = ?, notebook_id = ? WHERE id = ?`;
+    
+    const [results] = await db.promise().execute(query, [
+      body.fish_name,
+      body.fish_url,
+      body.comments,
+      body.size,
+      body.weight,
+      body.spot,
+      body.fishing_date,
+      body.release_fish,
+      body.notebook_id,
+      id
+    ]);
+
+    if (results.affectedRows === 1) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    throw error;
+  }
+}
+
+// Delete one notebook page
+async function deleteNotebookPage(id) {
+  try {
+    const query = `DELETE FROM notebook_pages WHERE id = ?`;
+    
+    const [results] = await db.promise().execute(query, [id]);
+
+    if (results.affectedRows === 1) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    throw error;
+  }
+}
   
 module.exports = {
   getAllNotebookPages,
-  createNotebookPage
+  createNotebookPage,
+  updateNotebookPage,
+  deleteNotebookPage
 }
