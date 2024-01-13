@@ -59,16 +59,76 @@ async function createTrip(req, res) {
 // Delete one trip
 async function deleteTrip(req, res) {
   try {
-    const result = await tripModel.deleteTrip(req.body.id);
+    const result = await tripModel.deleteTrip(req.params.id);
     if(result) {
       res.status(200).json({
         success: true,
-        message: `Trip with id ${req.body.id} deleted successfully`,
+        message: `Trip with id ${req.params.id} deleted successfully`,
       });
     } else {
       res.status(404).json({
         success: false,
-        message: `Trip with id ${req.body.id} not found`,
+        message: `Trip with id ${req.params.id} not found`,
+      });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+// Update one trip
+async function updateTrip(req, res) {
+  try {
+    const result = await tripModel.updateTrip(req.body, req.params.id);
+    if(result) {
+      res.status(200).json({
+        success: true,
+        message: `Trip with id ${req.params.id} updated successfully`,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: `Trip with id ${req.params.id} not found`,
+      });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+// Get one trip by user id
+async function getTripByUser(req, res) {
+  try {
+    const rows = await tripModel.getTripByUser(req.params.user_id);
+    if(!rows) {
+      res.status(404).json({
+        success: false,
+        message: 'Trip not found',
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        results: rows
+      });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+// Get trip by type
+async function getTripByType(req, res) {
+  try {
+    const rows = await tripModel.getTripByType(req.params.type);
+    if(!rows) {
+      res.status(404).json({
+        success: false,
+        message: 'Trip not found',
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        results: rows
       });
     }
   } catch (error) {
@@ -79,5 +139,8 @@ async function deleteTrip(req, res) {
 module.exports = {
   getAllTrips,
   createTrip,
-  deleteTrip
+  deleteTrip,
+  updateTrip,
+  getTripByUser,
+  getTripByType
 }
