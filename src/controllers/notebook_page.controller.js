@@ -81,9 +81,30 @@ async function deleteNotebookPage(req, res) {
   }
 }
 
+// get notebook page by user
+async function getNotebookPageByUser(req, res) {
+  try {
+    const rows = await notebookPageModel.getNotebookPageByUser(req.params.id);
+    if(!rows) {
+      res.status(404).json({
+        success: false,
+        message: 'Notebook not found',
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        results: rows
+      });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
 module.exports = {
   getAllNotebookPages,
   createNotebookPage,
   updateNotebookPage,
-  deleteNotebookPage
+  deleteNotebookPage,
+  getNotebookPageByUser
 }

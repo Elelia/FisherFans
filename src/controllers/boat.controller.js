@@ -1,10 +1,11 @@
 const boatModel = require('../models/boat.model');
+const userModel = require('../models/user.model');
 
 // Get all boats
 async function getAllBoats(req, res) {
   try {
     const rows = await boatModel.getAllBoats();
-    if(!rows) {
+    if(rows.length === 0) {
       res.status(404).json({
         success: false,
         message: 'Boats not found',
@@ -24,7 +25,7 @@ async function getAllBoats(req, res) {
 async function getBoatByUser(req, res) {
   try {
     const rows = await boatModel.getBoatByUser(req.params.id);
-    if(!rows) {
+    if(rows.length === 0) {
       res.status(404).json({
         success: false,
         message: 'Boat not found',
@@ -43,16 +44,28 @@ async function getBoatByUser(req, res) {
 // create one boat
 async function createBoat(req, res) {
   try {
-    const result = await boatModel.createBoat(req.body);
-    if(result) {
-      res.status(201).json({
-        success: true,
-        message: 'Boat created successfully',
-      });
+    const autorized = false;
+    const licence_number = await userModel.getBoatingLicenseNumberByUser(req.body.user_id);
+    if (licence_number[0].boating_license_number) {
+      autorized = true;
+    }
+    if(autorized) {
+      const result = await boatModel.createBoat(req.body);
+      if(result) {
+        res.status(201).json({
+          success: true,
+          message: 'Boat created successfully',
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: 'Boat could not be created',
+        });
+      }
     } else {
       res.status(400).json({
         success: false,
-        message: 'Boat could not be created',
+        message: 'You need a boating license to create a boat',
       });
     }
   } catch (error) {
@@ -104,7 +117,28 @@ async function deleteBoat(req, res) {
 async function getBoatByBrand(req, res) {
   try {
     const rows = await boatModel.getBoatByBrand(req.params.brand);
-    if(!rows) {
+    if(rows.length === 0) {
+      res.status(404).json({
+        success: false,
+        message: 'Boat not found',
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        results: rows
+      });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+async function getBoatBoundingBox(req, res) {
+  try {
+    console.log(req.params.minLatitude, req.params.maxLatitude, req.params.minLongitude, req.params.maxLongitude);
+    const rows = await boatModel.getBoatBoundingBox(req.params.minLatitude, req.params.maxLatitude, req.params.minLongitude, req.params.maxLongitude);
+    console.log(rows);
+    if(rows.length === 0) {
       res.status(404).json({
         success: false,
         message: 'Boat not found',
@@ -126,5 +160,6 @@ module.exports = {
   createBoat,
   updateBoat,
   deleteBoat,
-  getBoatByBrand
+  getBoatByBrand,
+  getBoatBoundingBox
 }

@@ -108,11 +108,23 @@ async function getUserByCity(city) {
     throw error;
   }
 }
+
+// get boating license number by user
+async function getBoatingLicenseNumberByUser(id) {
+  try {
+    const query = `SELECT boating_license_number FROM users WHERE id = ?`;
+    const [rows] = await db.promise().execute(query, [id]);
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+}
   
 module.exports = {
   getAllUsers,
   createUser,
   deleteUser,
   updateUser,
-  getUserByCity
+  getUserByCity,
+  getBoatingLicenseNumberByUser
 }

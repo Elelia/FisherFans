@@ -43,7 +43,7 @@ async function createReservation(req, res) {
 // delete one reservation
 async function deleteReservation(req, res) {
   try {
-    const result = await reservationModel.deleteReservation(req.body);
+    const result = await reservationModel.deleteReservation(req.params.id);
     if(result) {
       res.status(200).json({
         success: true,
@@ -60,8 +60,71 @@ async function deleteReservation(req, res) {
   }
 }
 
+// get reservation by user
+async function getReservationByUser(req, res) {
+  try {
+    const rows = await reservationModel.getReservationByUser(req.params.id);
+    if(!rows) {
+      res.status(404).json({
+        success: false,
+        message: 'Reservation not found',
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        results: rows
+      });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+// get reservation by price
+async function getReservationByPrice(req, res) {
+  try {
+    const rows = await reservationModel.getReservationByPrice(req.params.price);
+    if(!rows) {
+      res.status(404).json({
+        success: false,
+        message: 'Reservation not found',
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        results: rows
+      });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+// update one reservation
+async function updateReservation(req, res) {
+  try {
+    const result = await reservationModel.updateReservation(req.body, req.params.id);
+    if(result) {
+      res.status(200).json({
+        success: true,
+        message: 'Reservation updated successfully',
+      });
+    } else {
+      res.status(400).json({
+        success: false,
+        message: 'Reservation could not be updated',
+      });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
 module.exports = {
   getAllReservations,
   createReservation,
-  deleteReservation
+  deleteReservation,
+  getReservationByUser,
+  getReservationByPrice,
+  updateReservation
 }

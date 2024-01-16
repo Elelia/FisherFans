@@ -81,10 +81,28 @@ async function deleteNotebookPage(id) {
     throw error;
   }
 }
+
+// get notebook page by user
+async function getNotebookPageByUser(id) {
+  try {
+    const query = `SELECT * FROM notebook_pages np INNER JOIN notebook n on np.notebook_id = n.id WHERE n.user_id = ?`;
+    
+    const [rows] = await db.promise().execute(query, [id]);
+
+    if (rows.length > 0) {
+      return rows;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    throw error;
+  }
+}
   
 module.exports = {
   getAllNotebookPages,
   createNotebookPage,
   updateNotebookPage,
-  deleteNotebookPage
+  deleteNotebookPage,
+  getNotebookPageByUser
 }

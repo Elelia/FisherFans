@@ -15,4 +15,7 @@ router.put('/:id', Token.authenticateToken, notebookPageController.updateNoteboo
 // delete one notebook page
 router.delete('/:id', Token.authenticateToken, notebookPageController.deleteNotebookPage);
 
+// get notebook page by user
+router.get('/user/:id', notebookPageController.getNotebookPageByUser);
+
 module.exports = router;

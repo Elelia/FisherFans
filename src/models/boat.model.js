@@ -123,6 +123,23 @@ async function getBoatByBrand(brand) {
     throw error;
   }
 }
+
+// get boat with bounding box
+async function getBoatBoundingBox(minLatitude, maxLatitude, minLongitude, maxLongitude) {
+  const query = `
+    SELECT * FROM boats
+    WHERE latitude BETWEEN ? AND ?
+    AND longitude BETWEEN ? AND ?
+  `;
+
+  try {
+    const [bateaux] = await db.promise().execute(query, [minLatitude, maxLatitude, minLongitude, maxLongitude]);
+    return bateaux;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des bateaux dans la bounding box:', error);
+    throw error;
+  }
+}
   
 module.exports = {
   getAllBoats,
@@ -130,5 +147,6 @@ module.exports = {
   createBoat,
   updateBoat,
   deleteBoat,
-  getBoatByBrand
+  getBoatByBrand,
+  getBoatBoundingBox
 }

@@ -21,4 +21,7 @@ router.delete('/:id', Token.authenticateToken, boatController.deleteBoat);
 // get boat by brand
 router.get('/brand/:brand', boatController.getBoatByBrand);
 
+// get boat by bounding box
+router.get('/boundingbox/:minLatitude/:maxLatitude/:minLongitude/:maxLongitude', boatController.getBoatBoundingBox);
+
 module.exports = router;    

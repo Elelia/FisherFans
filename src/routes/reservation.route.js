@@ -10,6 +10,16 @@ router.get('/', reservationController.getAllReservations);
 router.post('/', Token.authenticateToken, reservationController.createReservation);
 
 // delete one trip
-router.delete('/', Token.authenticateToken, reservationController.deleteReservation);
+router.delete('/:id', Token.authenticateToken, reservationController.deleteReservation);
+
+// get reservation by user
+router.get('/user/:id', reservationController.getReservationByUser);
+
+// get reservation by price
+router.get('/price/:price', reservationController.getReservationByPrice);
+
+// update one reservation
+router.put('/:id', Token.authenticateToken, reservationController.updateReservation);
+
 
 module.exports = router;

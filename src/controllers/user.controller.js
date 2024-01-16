@@ -104,5 +104,6 @@ module.exports = {
   getAllUsers,
   createUser,
   deleteUser,
+  updateUser,
   getUserByCity
 }
