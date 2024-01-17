@@ -23,7 +23,6 @@ async function getAllNotebooks(req, res) {
 // Create one notebook
 async function createNotebook(req, res) {
   try {
-    console.log(req.body);
     const result = await notebookModel.createNotebook(req.body);
     if(result) {
       res.status(201).json({

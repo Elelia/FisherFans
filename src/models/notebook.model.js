@@ -13,8 +13,17 @@ async function getAllNotebooks() {
 // Insert one notebook
 async function createNotebook(body) {
   try {
-    await db.promise().query(`INSERT INTO notebook (user_id) VALUES ('${body.user_id}')`);
-    return true;
+    const query = `INSERT INTO notebook (user_id) VALUES (?)`;
+    
+    const [results] = await db.promise().execute(query, [
+      body.user_id
+    ]);
+
+    if (results.affectedRows === 1) {
+      return true;
+    } else {
+      return false;
+    }
   } catch (error) {
     throw error;
   }

@@ -3,14 +3,18 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 //génère un token à la connection de l'utilisateur
-function generateToken() {
-  // const { id, nom, prenom, mail, admin } = user;
-  const payload = {
-    "id": 1,
-    "nom": "Doe",
-    "prenom": "John"
-  };
-  const accessToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '5h' });
+function generateToken(user) {
+  //console.log(user);
+  if(!user) {
+    user = {
+      "id": null,
+      "last_name": null,
+      "first_name": null,
+      "email": null
+    };
+  }
+  const payload = user;
+  const accessToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
   return accessToken;
 }
 
@@ -32,26 +36,18 @@ function authenticateToken(req, res, next) {
   }
 }
 
+// Set token in cookie
 function setTokenCookie(res, token) {
   res.cookie('token', token, {
     httpOnly: true,
-    Secure: false
+    Secure: false,
     //sameSite: 'Strict',
-    //maxAge: 3600000
+    maxAge: 3600000
   });
-}
-
-function clearTokenCookie(req, res) {
-  try {
-    res.clearCookie('token');
-  } catch(error) {
-    res.status(500).send(error);
-  }
 }
 
 module.exports = {
   generateToken,
   authenticateToken,
-  setTokenCookie,
-  clearTokenCookie
+  setTokenCookie
 };
