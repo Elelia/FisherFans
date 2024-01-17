@@ -119,6 +119,17 @@ async function getBoatingLicenseNumberByUser(id) {
     throw error;
   }
 }
+
+// login
+async function login(email, password) {
+  try {
+    const query = `SELECT * FROM users WHERE email = ? AND password = ?`;
+    const [rows] = await db.promise().execute(query, [email, password]);
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+}
   
 module.exports = {
   getAllUsers,
@@ -126,5 +137,6 @@ module.exports = {
   deleteUser,
   updateUser,
   getUserByCity,
-  getBoatingLicenseNumberByUser
+  getBoatingLicenseNumberByUser,
+  login
 }

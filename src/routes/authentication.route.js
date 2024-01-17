@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const authenticationController = require('../controllers/authentication.controller');
-const Token = require('../../token');
+const Token = require('../session/token');
 
-// login route to get token
-router.post('/login', authenticationController.getToken);
+// get token
+router.post('/token', authenticationController.getToken);
 
-// test route to check token
-router.get('/secure', Token.authenticateToken, authenticationController.test);
+// login to get token
+router.post('/login', authenticationController.login);
 
 module.exports = router;

@@ -133,6 +133,7 @@ async function getBoatByBrand(req, res) {
   }
 }
 
+// get boat with bounding box
 async function getBoatBoundingBox(req, res) {
   try {
     console.log(req.params.minLatitude, req.params.maxLatitude, req.params.minLongitude, req.params.maxLongitude);

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const reservationController = require('../controllers/reservation.controller');
-const Token = require('../../token');
+const Token = require('../session/token');
 
 // get all trips
 router.get('/', reservationController.getAllReservations);

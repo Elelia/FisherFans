@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const notebookPageController = require('../controllers/notebook_page.controller');
-const Token = require('../../token');
+const Token = require('../session/token');
 
 // get all notebook pages
 router.get('/', notebookPageController.getAllNotebookPages);

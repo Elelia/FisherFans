@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const boatController = require('../controllers/boat.controller');
-const Token = require('../../token');
+const Token = require('../session/token');
 
 // get all boats
 router.get('/', boatController.getAllBoats);

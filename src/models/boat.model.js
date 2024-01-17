@@ -126,13 +126,13 @@ async function getBoatByBrand(brand) {
 
 // get boat with bounding box
 async function getBoatBoundingBox(minLatitude, maxLatitude, minLongitude, maxLongitude) {
-  const query = `
-    SELECT * FROM boats
-    WHERE latitude BETWEEN ? AND ?
-    AND longitude BETWEEN ? AND ?
-  `;
-
   try {
+    const query = `
+      SELECT * FROM boats
+      WHERE latitude BETWEEN ? AND ?
+      AND longitude BETWEEN ? AND ?
+    `;
+
     const [bateaux] = await db.promise().execute(query, [minLatitude, maxLatitude, minLongitude, maxLongitude]);
     return bateaux;
   } catch (error) {

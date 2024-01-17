@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/user.controller');
-const Token = require('../../token');
+const Token = require('../session/token');
 
 // get all users
 router.get('/', Token.authenticateToken, userController.getAllUsers);

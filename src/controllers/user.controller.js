@@ -1,3 +1,4 @@
+const { get } = require('https');
 const userModel = require('../models/user.model');
 
 // Get all users
