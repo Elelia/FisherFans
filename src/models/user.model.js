@@ -49,7 +49,7 @@ async function createUser(body) {
 // Delete one user
 async function deleteUser(id) {
   try {
-    const query = `SELECT * FROM users WHERE id = ?`;
+    const query = `DELETE FROM users WHERE id = ?`;
     const [results] = await db.promise().execute(query, [id]);
     if (results.affectedRows === 1) {
       return true;
