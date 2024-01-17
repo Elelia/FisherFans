@@ -26,6 +26,10 @@ app.use('/user', user_route);
   res.send('POST request received');
 });*/
 
+app.get('/', (req, res) => {
+  res.send('Hey this is my API running')
+})
+
 app.listen(process.env.PORT, () => {
   console.log(`Server Started at ${process.env.PORT}`);
 });
