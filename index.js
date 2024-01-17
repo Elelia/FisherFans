@@ -14,6 +14,8 @@ const user_route = require('./src/routes/user.route');
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use('/auth', authentication_route);
 app.use('/notebook', notebook_route);
 app.use('/notebook_page', notebook_page_route);
