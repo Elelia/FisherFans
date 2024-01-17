@@ -44,7 +44,7 @@ async function getBoatByUser(req, res) {
 // create one boat
 async function createBoat(req, res) {
   try {
-    const autorized = false;
+    var autorized = false;
     const licence_number = await userModel.getBoatingLicenseNumberByUser(req.body.user_id);
     if (licence_number[0].boating_license_number) {
       autorized = true;

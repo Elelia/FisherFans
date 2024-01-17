@@ -49,6 +49,8 @@ async function createBoat(body) {
       body.user_id
     ]);
 
+    console.log(results);
+
     if (results.affectedRows === 1) {
       return true;
     } else {
