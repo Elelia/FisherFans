@@ -191,7 +191,7 @@ paths:
                     examples:
                       - Error.
       deprecated: false
-  /users:
+  /user/:
     post:
       summary: Create new user
       description: ''
@@ -318,6 +318,41 @@ paths:
                     examples:
                       - Error.
       deprecated: false
+    get:
+      summary: Get all users
+      description: ''
+      operationId: all-users
+      tags:
+        - Users
+      responses:
+        '200':
+          description: 'Get all of the users'
+          content:
+            '*/*' :
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Users'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 0
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Error.
+      deprecated: false
+  /user/{id}:
     put:
       summary: Modify one user
       description: ''
@@ -499,13 +534,13 @@ paths:
                     examples:
                       - Error.
       deprecated: false
-  /users/findbypostalcode/{postal_code}:
+  /user/city/{city}:
     get:
-      summary: Get one user by postal code
+      summary: Get one user by city
       description: ''
-      operationId: users-get-by-postal-code
+      operationId: users-get-by-city
       parameters:
-        - name: postal_code
+        - name: city
           in: path
           schema:
             type: integer
@@ -514,7 +549,7 @@ paths:
         - Users
       responses:
         '200':
-          description: 'details of users with this postal code'
+          description: 'details of users with this city'
           content:
             '*/*' :
               schema:
@@ -540,7 +575,7 @@ paths:
                     examples:
                       - Error.
       deprecated: false
-  /boats:
+  /boat/:
     post:
       summary: Create new boat
       description: ''
@@ -659,6 +694,41 @@ paths:
                     examples:
                       - Error.
       deprecated: false
+    get:
+      summary: Get all boats
+      description: ''
+      operationId: all-boats
+      tags:
+        - Boats
+      responses:
+        '200':
+          description: '200'
+          content:
+            '*/*' :
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Boats'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 0
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Error.
+      deprecated: false
+  /boat/{id}:
     put:
       summary: Modify one boat
       description: ''
@@ -812,7 +882,7 @@ paths:
                     examples:
                       - Error.
       deprecated: false
-  /boats/findbybrand/{brand}:
+  /boat/brand/{brand}:
     get:
       summary: Get boats by id brand
       description: ''
@@ -853,18 +923,28 @@ paths:
                     examples:
                       - Error.
       deprecated: false
-  /boats/findbyzone/{latitude}/{longitude}:
+  /boat/boudingbox/{minLatitude}/{maxLatitude}/{minLongitude}/{maxLongitude}:
     get:
       summary: Get boats by id zone
       description: ''
       operationId: boats-get-by-zone
       parameters:
-        - name: latitude
+        - name: minLatitude
           in: path
           schema:
             type: number
           required: true
-        - name: longitude
+        - name: maxLatitude
+          in: path
+          schema:
+            type: number
+          required: true
+        - name: minLongitude
+          in: path
+          schema:
+            type: number
+          required: true
+        - name: maxLongitude
           in: path
           schema:
             type: number
@@ -899,7 +979,48 @@ paths:
                     examples:
                       - Error.
       deprecated: false
-  /trips:
+  /boat/user/{id}:
+    get:
+      summary: Get boats by id user
+      description: ''
+      operationId: boats-get-by-user
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      tags:
+        - Boats
+      responses:
+        '200':
+          description: '200'
+          content:
+            '*/*' :
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Boats'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 0
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Error.
+      deprecated: false
+  /trip/:
     post:
       summary: Create new trip
       description: ''
@@ -1004,6 +1125,41 @@ paths:
                     type: string
                     examples:
                       - Error.
+    get:
+      summary: Get all trips
+      description: ''
+      operationId: all-trips
+      tags:
+        - Trips
+      responses:
+        '200':
+          description: '200'
+          content:
+            '*/*' :
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Trips'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 0
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Error.
+      deprecated: false
+  /trip/{id}:
     put:
       summary: Modify one trip
       description: ''
@@ -1152,18 +1308,13 @@ paths:
                     type: string
                     examples:
                       - Error.
-  /trips/findbydate/{start_date}/{end_date}:
+  /trip/type/{trip_type}:
     get:
-      summary: Get trips by date
+      summary: Get trips by type
       description: ''
-      operationId: trips-by-date
+      operationId: trips-by-type
       parameters:
-        - name: start_date
-          in: path
-          schema:
-            type: string
-          required: true
-        - name: end_date
+        - name: trip_type
           in: path
           schema:
             type: string
@@ -1198,7 +1349,48 @@ paths:
                     examples:
                       - Error.
       deprecated: false
-  /reservations:
+  /trip/user/{id}:
+    get:
+      summary: Get trips by user id
+      description: ''
+      operationId: trips-by-user
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      tags:
+        - Trips
+      responses:
+        '200':
+          description: '200'
+          content:
+            '*/*' :
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Trips'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 0
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Error.
+      deprecated: false
+  /reservation/:
     post:
       summary: Create new reservation
       description: ''
@@ -1268,6 +1460,41 @@ paths:
                     type: string
                     examples:
                       - Error.
+    get:
+      summary: Get all reservations
+      description: ''
+      operationId: all-reservations
+      tags:
+        - Reservations
+      responses:
+        '200':
+          description: '200'
+          content:
+            '*/*' :
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reservations'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 0
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Error.
+      deprecated: false
+  /reservation/{id}:
     put:
       summary: Modify one reservation
       description: ''
@@ -1381,16 +1608,16 @@ paths:
                     type: string
                     examples:
                       - Error.
-  /reservations/findbyreservationdate/{reservation_date}:
+  /reservation/price/{price}:
     get:
-      summary: Get reservations by date
+      summary: Get reservations by price
       description: ''
-      operationId: reservationss-by-date
+      operationId: reservationss-by-price
       parameters:
-        - name: reservation_date
+        - name: price
           in: path
           schema:
-            type: string
+            type: number
           required: true
       tags:
         - Reservations
@@ -1422,7 +1649,48 @@ paths:
                     examples:
                       - Error.
       deprecated: false
-  /notebook_pages:
+  /reservation/user/{id}:
+    get:
+      summary: Get reservations by user id
+      description: ''
+      operationId: reservationss-by-user
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      tags:
+        - Reservations
+      responses:
+        '200':
+          description: '200'
+          content:
+            '*/*' :
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reservations'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 0
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Error.
+      deprecated: false
+  /notebook_page/:
     post:
       summary: Create new page
       description: ''
@@ -1505,12 +1773,47 @@ paths:
                     type: string
                     examples:
                       - Error.
+    get:
+      summary: Get all notebook pages
+      description: ''
+      operationId: all-notebook-pages
+      tags:
+        - Notebook pages
+      responses:
+        '200':
+          description: '200'
+          content:
+            '*/*' :
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notebook_pages'
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result: {}
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    examples:
+                      - 0
+                    default: 0
+                  status_message:
+                    type: string
+                    examples:
+                      - Error.
+      deprecated: false
+  /notebook_page/{id}:
     put:
       summary: Modify one page
       description: ''
       operationId: notebookpages-modify
       parameters:
-        - name: id
+        - name: id_user
           in: path
           schema:
             type: integer
@@ -1636,16 +1939,16 @@ paths:
                     type: string
                     examples:
                       - Error.
-  /notebook_pages/findbyfishingdate/{fishing_date}:
+  /notebook_page/user/{id}:
     get:
-      summary: Get notebook_pages by date
+      summary: Get notebook pages by user id
       description: ''
-      operationId: notebook-pages-by-date
+      operationId: notebook-pages-by-user
       parameters:
-        - name: fishing_date
+        - name: id
           in: path
           schema:
-            type: string
+            type: integer
           required: true
       tags:
         - Notebook pages

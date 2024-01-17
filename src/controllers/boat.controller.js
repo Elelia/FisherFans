@@ -136,13 +136,11 @@ async function getBoatByBrand(req, res) {
 // get boat with bounding box
 async function getBoatBoundingBox(req, res) {
   try {
-    console.log(req.params.minLatitude, req.params.maxLatitude, req.params.minLongitude, req.params.maxLongitude);
     const rows = await boatModel.getBoatBoundingBox(req.params.minLatitude, req.params.maxLatitude, req.params.minLongitude, req.params.maxLongitude);
-    console.log(rows);
     if(rows.length === 0) {
       res.status(404).json({
         success: false,
-        message: 'Boat not found',
+        message: 'Boat with bounding box not found',
       });
     } else {
       res.status(200).json({

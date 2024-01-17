@@ -7,7 +7,7 @@ const Token = require('../session/token');
 router.get('/', boatController.getAllBoats);
 
 // get boats by id user
-router.get('/:id', boatController.getBoatByUser);
+router.get('/user/:id', boatController.getBoatByUser);
 
 // create one boat
 router.post('/', Token.authenticateToken, boatController.createBoat);
@@ -24,4 +24,4 @@ router.get('/brand/:brand', boatController.getBoatByBrand);
 // get boat by bounding box
 router.get('/boundingbox/:minLatitude/:maxLatitude/:minLongitude/:maxLongitude', boatController.getBoatBoundingBox);
 
-module.exports = router;    
+module.exports = router;

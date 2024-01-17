@@ -43,7 +43,6 @@ async function createNotebookPage(req, res) {
 // Update one notebook page
 async function updateNotebookPage(req, res) {
   try {
-    console.log(req.body);
     const result = await notebookPageModel.updateNotebookPage(req.body, req.params.id);
     if(result) {
       res.status(200).json({

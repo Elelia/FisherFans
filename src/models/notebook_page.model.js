@@ -40,7 +40,8 @@ async function createNotebookPage(body) {
 // Update one notebook page
 async function updateNotebookPage(body, id) {
   try {
-    const query = `UPDATE notebook_pages SET fish_name = ?, fish_url = ?, comments = ?, size = ?, weight = ?, spot = ?, fishing_date = ?, release_fish = ?, notebook_id = ? WHERE id = ?`;
+    const query = `UPDATE notebook_pages SET fish_name = ?, fish_url = ?, comments = ?, size = ?, weight = ?, spot = ?, fishing_date = ?, release_fish = ? 
+    WHERE notebook_id IN (SELECT id FROM notebook WHERE user_id = ?)`;
     
     const [results] = await db.promise().execute(query, [
       body.fish_name,
@@ -51,7 +52,6 @@ async function updateNotebookPage(body, id) {
       body.spot,
       body.fishing_date,
       body.release_fish,
-      body.notebook_id,
       id
     ]);
 
