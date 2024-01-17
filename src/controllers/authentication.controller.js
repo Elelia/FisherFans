@@ -21,7 +21,7 @@ async function getToken (req, res) {
   }
 }
 
-// login
+// login user
 async function login (req, res) {
   try {
     const { email, password } = req.body;
@@ -32,7 +32,9 @@ async function login (req, res) {
         message: 'Wrong email or password',
       });
     } else {
-      const token = Token.generateToken(result[0]);
+      const { id, last_name, first_name, email } = result[0];
+      const user = { id, last_name, first_name, email };
+      const token = Token.generateToken(user);
       Token.setTokenCookie(res, token);
       if(token === undefined) {
         res.status(500).json({

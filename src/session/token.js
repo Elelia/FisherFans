@@ -4,7 +4,7 @@ require('dotenv').config();
 
 //génère un token à la connection de l'utilisateur
 function generateToken(user) {
-  console.log(user);
+  //console.log(user);
   if(!user) {
     user = {
       "id": null,
@@ -13,8 +13,7 @@ function generateToken(user) {
       "email": null
     };
   }
-  const { id, last_name, first_name, email } = user;
-  const payload = { id, last_name, first_name, email };
+  const payload = user;
   const accessToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
   return accessToken;
 }
