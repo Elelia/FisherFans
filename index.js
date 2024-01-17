@@ -10,12 +10,12 @@ const trip_route = require('./src/routes/trip.route');
 const boat_route = require('./src/routes/boat.route');
 const reservation_route = require('./src/routes/reservation.route');
 const user_route = require('./src/routes/user.route');
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+//app.use(express.urlencoded({ extended: true }));
 
 app.use('/auth', authentication_route);
 app.use('/notebook', notebook_route);
@@ -30,7 +30,7 @@ app.use('/user', user_route);
 });*/
 
 app.get('/', (req, res) => {
-  res.send('Hey this is my API running')
+  res.send('Fisher fans API')
 })
 
 app.listen(process.env.PORT, () => {
