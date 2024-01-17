@@ -22,9 +22,9 @@ app.use('/boat', boat_route);
 app.use('/reservation', reservation_route);
 app.use('/user', user_route);
 
-app.post('/', (req, res) => {
+/*app.post('/', (req, res) => {
   res.send('POST request received');
-});
+});*/
 
 app.listen(process.env.PORT, () => {
   console.log(`Server Started at ${process.env.PORT}`);
