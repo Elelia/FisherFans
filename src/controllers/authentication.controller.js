@@ -35,30 +35,31 @@ async function login (req, res) {
         success: false,
         message: 'Wrong email or password',
       });
-    }
-    const result = await userModel.login(email, db_password);
-    if(result.length === 0) {
-      res.status(404).json({
-        success: false,
-        message: 'Wrong email or password',
-      });
     } else {
-      const { id, last_name, first_name, email } = result[0];
-      const user = { id, last_name, first_name, email };
-      const token = Token.generateToken(user);
-      Token.setTokenCookie(res, token);
-      if(token === undefined) {
-        res.status(500).json({
+      const result = await userModel.login(email, db_password);
+      if(result.length === 0) {
+        res.status(404).json({
           success: false,
-          message: 'Token not generated',
+          message: 'Wrong email or password',
         });
       } else {
-        res.status(200).json({
-          success: true,
-          message: 'Login successful',
-          user: user,
-          token
-        });
+        const { id, last_name, first_name, email } = result[0];
+        const user = { id, last_name, first_name, email };
+        const token = Token.generateToken(user);
+        Token.setTokenCookie(res, token);
+        if(token === undefined) {
+          res.status(500).json({
+            success: false,
+            message: 'Token not generated',
+          });
+        } else {
+          res.status(200).json({
+            success: true,
+            message: 'Login successful',
+            user: user,
+            token
+          });
+        }
       }
     }
   } catch (error) {
